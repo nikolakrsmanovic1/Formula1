@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 
 class RaceDetailActivity : AppCompatActivity() {
 
@@ -28,7 +29,11 @@ class RaceDetailActivity : AppCompatActivity() {
         )
         rows.forEachIndexed { index, rowId ->
             val row = findViewById<View>(rowId)
-            row.findViewById<TextView>(R.id.tvSessionName).text = sessionNames[index]
+            val nameView = row.findViewById<TextView>(R.id.tvSessionName)
+            nameView.text = sessionNames[index]
+            if (index == rows.lastIndex) {
+                nameView.setTextColor(ContextCompat.getColor(this, R.color.accent_light))
+            }
             row.findViewById<TextView>(R.id.tvSessionTime).setText(R.string.session_time_placeholder)
         }
 

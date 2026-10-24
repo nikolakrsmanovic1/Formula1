@@ -23,6 +23,7 @@ class HomeActivity : AppCompatActivity() {
         bindCountdown(R.id.cdDays, R.string.cd_days_value, R.string.cd_days_label)
         bindCountdown(R.id.cdHours, R.string.cd_hours_value, R.string.cd_hours_label)
         bindCountdown(R.id.cdMinutes, R.string.cd_minutes_value, R.string.cd_minutes_label)
+        bindCountdown(R.id.cdSeconds, R.string.cd_seconds_value, R.string.cd_seconds_label)
 
         // Top 3 vozača
         intArrayOf(R.id.driverRow1, R.id.driverRow2, R.id.driverRow3)

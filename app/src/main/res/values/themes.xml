@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Formula1" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/ink</item>
-        <item name="colorPrimaryVariant">@color/ink</item>
+    <style name="Theme.Formula1" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimaryVariant">@color/accent</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:windowBackground">@color/screen_bg</item>
         <item name="android:statusBarColor">@color/screen_bg</item>
         <item name="android:navigationBarColor">@color/screen_bg</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="TextHeadline">
@@ -54,7 +54,7 @@
     </style>
 
     <style name="FieldInput">
-        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:background">@drawable/bg_field</item>
         <item name="android:paddingStart">@dimen/spacing_lg</item>
         <item name="android:paddingEnd">@dimen/spacing_lg</item>
         <item name="android:textSize">@dimen/text_body_large</item>

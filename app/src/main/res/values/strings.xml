@@ -15,6 +15,8 @@
     <string name="team_subtitle">Konstruktor</string>
     <string name="points_placeholder">pts</string>
     <string name="race_name_format">R%1$d Naziv trke</string>
+    <string name="race_round_format">R%1$d</string>
+    <string name="race_name_placeholder">Naziv trke</string>
     <string name="race_place_placeholder">Grad, država</string>
     <string name="race_date_placeholder">datum</string>
 
@@ -40,7 +42,9 @@
     <string name="cd_minutes_value">42</string>
     <string name="cd_days_label">dana</string>
     <string name="cd_hours_label">sati</string>
-    <string name="cd_minutes_label">min</string>
+    <string name="cd_minutes_label">minuta</string>
+    <string name="cd_seconds_value">18</string>
+    <string name="cd_seconds_label">sekundi</string>
     <string name="top3_title">Top 3 u šampionatu</string>
 
     <!-- 3 Raspored -->

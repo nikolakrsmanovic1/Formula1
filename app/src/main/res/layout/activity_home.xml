@@ -14,7 +14,7 @@
         android:layout_height="@dimen/icon_button_size"
         android:layout_marginStart="@dimen/spacing_xl"
         android:layout_marginTop="@dimen/spacing_lg"
-        android:background="@drawable/bg_card"
+        android:background="@drawable/bg_icon_button"
         android:contentDescription="@string/desc_profile"
         android:src="@drawable/ic_user"
         android:tint="@color/ink"
@@ -23,9 +23,15 @@
 
     <TextView
         android:id="@+id/tvHomeTitle"
-        style="@style/TextTitle"
+        style="@style/TextBodyLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_logo"
+        android:paddingStart="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_xs"
+        android:paddingEnd="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_xs"
+        android:textStyle="bold|italic"
         android:text="@string/home_title"
         app:layout_constraintBottom_toBottomOf="@id/btnProfile"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +76,7 @@
                 <TextView
                     android:id="@+id/tvNextLabel"
                     style="@style/TextCaption"
+                    android:textColor="@color/accent_light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/next_race_label"
@@ -127,9 +134,21 @@
                     layout="@layout/item_countdown"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:layout_marginEnd="@dimen/spacing_sm"
+                    app:layout_constraintBottom_toBottomOf="@id/cdDays"
+                    app:layout_constraintEnd_toStartOf="@id/cdSeconds"
+                    app:layout_constraintStart_toEndOf="@id/cdHours"
+                    app:layout_constraintTop_toTopOf="@id/cdDays" />
+
+                <include
+                    android:id="@+id/cdSeconds"
+                    layout="@layout/item_countdown"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="@id/cdDays"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/cdHours"
+                    app:layout_constraintStart_toEndOf="@id/cdMinutes"
                     app:layout_constraintTop_toTopOf="@id/cdDays" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

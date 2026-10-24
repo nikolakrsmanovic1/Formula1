@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="screen_bg">#FFFFFF</color>
-    <color name="ink">#222222</color>
-    <color name="muted">#6B6B6B</color>
-    <color name="line">#8A8A8A</color>
-    <color name="divider">#CCCCCC</color>
-    <color name="surface">#F4F4F4</color>
+    <color name="screen_bg">#15151E</color>
+    <color name="surface">#1F1F2B</color>
+    <color name="surface_raised">#2A2A3C</color>
+    <color name="ink">#FFFFFF</color>
+    <color name="muted">#A8A8BC</color>
+    <color name="line">#3A3A52</color>
+    <color name="divider">#34344A</color>
+    <color name="accent">#D80600</color>
+    <color name="accent_light">#FF6A63</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 </resources>

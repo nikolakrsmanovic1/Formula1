@@ -38,6 +38,6 @@ class StandingsActivity : AppCompatActivity() {
     private fun styleTab(tabId: Int, active: Boolean) {
         val tab = findViewById<TextView>(tabId)
         tab.setBackgroundResource(if (active) R.drawable.bg_tab_active else R.drawable.bg_card)
-        tab.setTextColor(ContextCompat.getColor(this, if (active) R.color.white else R.color.ink))
+        tab.setTextColor(ContextCompat.getColor(this, if (active) R.color.white else R.color.muted))
     }
 }

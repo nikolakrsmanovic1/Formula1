@@ -14,7 +14,7 @@
         android:layout_height="@dimen/icon_button_size"
         android:layout_marginStart="@dimen/spacing_xl"
         android:layout_marginTop="@dimen/spacing_lg"
-        android:background="@drawable/bg_card"
+        android:background="@drawable/bg_icon_button"
         android:contentDescription="@string/desc_back"
         android:src="@drawable/ic_back"
         android:tint="@color/ink"

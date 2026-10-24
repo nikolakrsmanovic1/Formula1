@@ -11,8 +11,11 @@
     <dimen name="card_padding">16dp</dimen>
 
     <!-- Oblici -->
-    <dimen name="radius">8dp</dimen>
+    <dimen name="radius">14dp</dimen>
+    <dimen name="radius_large">20dp</dimen>
+    <dimen name="radius_small">10dp</dimen>
     <dimen name="stroke_width">1.5dp</dimen>
+    <dimen name="stroke_width_thick">3dp</dimen>
     <dimen name="divider_height">1dp</dimen>
     <dimen name="dash_width">6dp</dimen>
     <dimen name="dash_gap">4dp</dimen>
@@ -29,6 +32,7 @@
     <dimen name="track_image_height">180dp</dimen>
     <dimen name="tab_height">44dp</dimen>
     <dimen name="position_min_width">32dp</dimen>
+    <dimen name="badge_size">44dp</dimen>
 
     <!-- Tekst -->
     <dimen name="text_caption">12sp</dimen>

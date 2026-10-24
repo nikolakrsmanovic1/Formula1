@@ -26,8 +26,9 @@ class ScheduleActivity : AppCompatActivity() {
         rows.forEachIndexed { index, rowId ->
             val raceNumber = index + 1
             val row = findViewById<View>(rowId)
-            row.findViewById<TextView>(R.id.tvRaceName).text =
-                getString(R.string.race_name_format, raceNumber)
+            row.findViewById<TextView>(R.id.tvRaceRound).text =
+                getString(R.string.race_round_format, raceNumber)
+            row.findViewById<TextView>(R.id.tvRaceName).setText(R.string.race_name_placeholder)
             row.findViewById<TextView>(R.id.tvRacePlace).setText(R.string.race_place_placeholder)
             row.findViewById<TextView>(R.id.tvRaceDate).setText(R.string.race_date_placeholder)
 

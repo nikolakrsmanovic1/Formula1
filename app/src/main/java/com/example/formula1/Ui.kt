@@ -33,7 +33,7 @@ fun Activity.setupBottomNav(active: NavTab) {
     for ((id, tab, target) in tabs) {
         val item = findViewById<TextView>(id)
         val isActive = tab == active
-        val color = ContextCompat.getColor(this, if (isActive) R.color.ink else R.color.muted)
+        val color = ContextCompat.getColor(this, if (isActive) R.color.accent_light else R.color.muted)
         item.setTextColor(color)
         item.compoundDrawableTintList = ColorStateList.valueOf(color)
         item.setTypeface(null, if (isActive) Typeface.BOLD else Typeface.NORMAL)
@@ -49,7 +49,14 @@ fun Activity.setupBottomNav(active: NavTab) {
 /** Popunjava jedan red liste vozaca (ili timova). */
 fun Activity.bindDriverRow(rowId: Int, position: Int, nameRes: Int, subtitleRes: Int) {
     val row = findViewById<View>(rowId)
-    row.findViewById<TextView>(R.id.tvPosition).text = getString(R.string.position_format, position)
+    val positionView = row.findViewById<TextView>(R.id.tvPosition)
+    positionView.text = getString(R.string.position_format, position)
+    val positionColor = when (position) {
+        1 -> R.color.accent_light
+        2, 3 -> R.color.ink
+        else -> R.color.muted
+    }
+    positionView.setTextColor(ContextCompat.getColor(this, positionColor))
     row.findViewById<TextView>(R.id.tvDriverName).text = getString(nameRes, position)
     row.findViewById<TextView>(R.id.tvDriverTeam).setText(subtitleRes)
     row.findViewById<TextView>(R.id.tvPoints).setText(R.string.points_placeholder)
