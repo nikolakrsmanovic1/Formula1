@@ -10,13 +10,26 @@
     android:padding="@dimen/card_padding">
 
     <TextView
+        android:id="@+id/tvRaceRound"
+        style="@style/TextBodyLarge"
+        android:layout_width="@dimen/badge_size"
+        android:layout_height="@dimen/badge_size"
+        android:background="@drawable/bg_badge"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="R1" />
+
+    <TextView
         android:id="@+id/tvRaceName"
         style="@style/TextBodyLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_md"
         android:layout_marginEnd="@dimen/spacing_md"
         app:layout_constraintEnd_toStartOf="@id/tvRaceDate"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvRaceRound"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="R1 Naziv trke" />
 
@@ -25,11 +38,12 @@
         style="@style/TextMuted"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_md"
         android:layout_marginTop="@dimen/spacing_xs"
         android:layout_marginEnd="@dimen/spacing_md"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tvRaceDate"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvRaceRound"
         app:layout_constraintTop_toBottomOf="@id/tvRaceName"
         tools:text="Grad, država" />
 

@@ -28,9 +28,10 @@
                 android:layout_width="@dimen/logo_size"
                 android:layout_height="@dimen/logo_size"
                 android:layout_marginTop="@dimen/spacing_huge"
-                android:background="@drawable/bg_card"
+                android:background="@drawable/bg_logo"
                 android:gravity="center"
                 android:text="@string/login_logo"
+                android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
