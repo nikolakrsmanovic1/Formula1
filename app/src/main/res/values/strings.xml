@@ -1,3 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Formula1</string>
+    <string name="app_name">F1 aplikacija</string>
+
+    <!-- Zajednicko -->
+    <string name="desc_back">Nazad</string>
+    <string name="toast_soon">Uskoro</string>
+    <string name="nav_home">Početna</string>
+    <string name="nav_schedule">Raspored</string>
+    <string name="nav_standings">Poredak</string>
+    <string name="position_format">%1$d</string>
+    <string name="driver_name_format">Vozač %1$d</string>
+    <string name="team_name_format">Tim %1$d</string>
+    <string name="team_placeholder">Tim</string>
+    <string name="team_subtitle">Konstruktor</string>
+    <string name="points_placeholder">pts</string>
+    <string name="race_name_format">R%1$d Naziv trke</string>
+    <string name="race_place_placeholder">Grad, država</string>
+    <string name="race_date_placeholder">datum</string>
+
+    <!-- 1 Prijava -->
+    <string name="login_logo">F1</string>
+    <string name="login_title">Dobrodošao nazad</string>
+    <string name="login_subtitle">Prijavi se i prati sezonu</string>
+    <string name="label_email">E-pošta</string>
+    <string name="hint_email">ime@primer.com</string>
+    <string name="label_password">Lozinka</string>
+    <string name="hint_password">Unesi lozinku</string>
+    <string name="btn_login">Prijavi se</string>
+    <string name="link_register">Nemaš nalog? Registruj se</string>
+
+    <!-- 2 Početna -->
+    <string name="home_title">F1</string>
+    <string name="desc_profile">Profil</string>
+    <string name="next_race_label">Sledeća trka</string>
+    <string name="next_race_name">Naziv trke</string>
+    <string name="next_race_place">Mesto, datum</string>
+    <string name="cd_days_value">11</string>
+    <string name="cd_hours_value">03</string>
+    <string name="cd_minutes_value">42</string>
+    <string name="cd_days_label">dana</string>
+    <string name="cd_hours_label">sati</string>
+    <string name="cd_minutes_label">min</string>
+    <string name="top3_title">Top 3 u šampionatu</string>
+
+    <!-- 3 Raspored -->
+    <string name="schedule_title">Raspored 2026</string>
+    <string name="desc_filter">Filter</string>
+
+    <!-- 4 Profil -->
+    <string name="profile_title">Profil</string>
+    <string name="profile_name">Ime korisnika</string>
+    <string name="profile_email">ime@primer.com</string>
+    <string name="setting_theme">Tema</string>
+    <string name="setting_theme_value">Svetla</string>
+    <string name="setting_language">Jezik</string>
+    <string name="setting_language_value">Srpski</string>
+    <string name="setting_notifications">Obaveštenja</string>
+    <string name="setting_notifications_value">Uključena</string>
+    <string name="btn_logout">Odjavi se</string>
+    <string name="desc_avatar">Avatar korisnika</string>
+
+    <!-- 5 Poredak -->
+    <string name="standings_title">Poredak</string>
+    <string name="tab_drivers">Vozači</string>
+    <string name="tab_teams">Timovi</string>
+
+    <!-- 6 Detalj trke -->
+    <string name="detail_image">Slika staze</string>
+    <string name="detail_location">Grad, država, runda</string>
+    <string name="session_time_placeholder">dan, sat</string>
+    <string name="btn_results">Rezultati</string>
+    <string-array name="session_names">
+        <item>Trening 1</item>
+        <item>Trening 2</item>
+        <item>Trening 3</item>
+        <item>Kvalifikacije</item>
+        <item>Trka</item>
+    </string-array>
 </resources>

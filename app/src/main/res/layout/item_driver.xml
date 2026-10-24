@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:padding="@dimen/card_padding">
+
+    <TextView
+        android:id="@+id/tvPosition"
+        style="@style/TextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/position_min_width"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tvDriverName"
+        style="@style/TextBodyLarge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_marginEnd="@dimen/spacing_md"
+        app:layout_constraintEnd_toStartOf="@id/tvPoints"
+        app:layout_constraintStart_toEndOf="@id/tvPosition"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Vozač 1" />
+
+    <TextView
+        android:id="@+id/tvDriverTeam"
+        style="@style/TextMuted"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:layout_marginEnd="@dimen/spacing_md"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvPoints"
+        app:layout_constraintStart_toEndOf="@id/tvPosition"
+        app:layout_constraintTop_toBottomOf="@id/tvDriverName"
+        tools:text="Tim" />
+
+    <TextView
+        android:id="@+id/tvPoints"
+        style="@style/TextBodyLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="pts" />
+</androidx.constraintlayout.widget.ConstraintLayout>
