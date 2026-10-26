@@ -11,4 +11,10 @@
     <color name="accent_light">#FF6A63</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="icon_bg_start">#262633</color>
+    <color name="icon_bg_end">#0B0B11</color>
+    <color name="icon_red_dark">#8F0400</color>
+    <color name="icon_red_bright">#FF3B2F</color>
+    <color name="icon_track">#2E2E3F</color>
+    <color name="icon_tick_off">#5A5A70</color>
 </resources>
