@@ -153,6 +153,53 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
+                android:id="@+id/tvFavTitle"
+                style="@style/TextTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxl"
+                android:text="@string/favorite_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardNextRace" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/favContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvFavTitle">
+
+                <TextView
+                    android:id="@+id/tvFavEmpty"
+                    style="@style/TextMuted"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_star"
+                    android:drawablePadding="@dimen/spacing_md"
+                    android:drawableTint="@color/accent_light"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/card_padding"
+                    android:text="@string/favorite_empty"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/favRow"
+                    layout="@layout/item_driver"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
                 android:id="@+id/tvTop3"
                 style="@style/TextTitle"
                 android:layout_width="wrap_content"
@@ -160,7 +207,7 @@
                 android:layout_marginTop="@dimen/spacing_xxl"
                 android:text="@string/top3_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardNextRace" />
+                app:layout_constraintTop_toBottomOf="@id/favContainer" />
 
             <include
                 android:id="@+id/driverRow1"

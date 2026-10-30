@@ -25,12 +25,35 @@ class ProfileActivity : AppCompatActivity() {
             R.string.setting_notifications_value
         )
 
+        // Omiljeni vozac: otvara ga ako je izabran, a ako nije vodi na Poredak
+        findViewById<View>(R.id.settingRow4).setOnClickListener {
+            val favorite = Favorites.get(this)
+            if (favorite == Favorites.NONE) {
+                startActivity(Intent(this, StandingsActivity::class.java))
+            } else {
+                val intent = Intent(this, DriverDetailActivity::class.java)
+                intent.putExtra(DriverDetailActivity.EXTRA_DRIVER_POSITION, favorite)
+                startActivity(intent)
+            }
+        }
+
         // Odjavi se -> Prijava (briše istoriju ekrana)
         findViewById<View>(R.id.btnLogout).setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
+    }
+
+    /** Osvezava red Omiljeni vozac kad se vratimo sa drugog ekrana. */
+    override fun onResume() {
+        super.onResume()
+        val row = findViewById<View>(R.id.settingRow4)
+        row.findViewById<TextView>(R.id.tvSettingTitle).setText(R.string.setting_favorite)
+        val favorite = Favorites.get(this)
+        row.findViewById<TextView>(R.id.tvSettingValue).text =
+            if (favorite == Favorites.NONE) getString(R.string.setting_favorite_none)
+            else getString(R.string.driver_name_format, favorite)
     }
 
     private fun bindSetting(rowId: Int, titleRes: Int, valueRes: Int) {

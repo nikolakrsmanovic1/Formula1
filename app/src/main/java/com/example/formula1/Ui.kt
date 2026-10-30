@@ -47,7 +47,13 @@ fun Activity.setupBottomNav(active: NavTab) {
 }
 
 /** Popunjava jedan red liste vozaca (ili timova). */
-fun Activity.bindDriverRow(rowId: Int, position: Int, nameRes: Int, subtitleRes: Int) {
+fun Activity.bindDriverRow(
+    rowId: Int,
+    position: Int,
+    nameRes: Int,
+    subtitleRes: Int,
+    opensDetail: Boolean = true
+) {
     val row = findViewById<View>(rowId)
     val positionView = row.findViewById<TextView>(R.id.tvPosition)
     positionView.text = getString(R.string.position_format, position)
@@ -60,4 +66,20 @@ fun Activity.bindDriverRow(rowId: Int, position: Int, nameRes: Int, subtitleRes:
     row.findViewById<TextView>(R.id.tvDriverName).text = getString(nameRes, position)
     row.findViewById<TextView>(R.id.tvDriverTeam).setText(subtitleRes)
     row.findViewById<TextView>(R.id.tvPoints).setText(R.string.points_placeholder)
+
+    // Zvezdica uz omiljenog vozaca (samo u listi vozaca)
+    val isFavorite = opensDetail && Favorites.get(this) == position
+    row.findViewById<View>(R.id.ivFavorite).visibility = if (isFavorite) View.VISIBLE else View.GONE
+
+    // Klik na vozaca -> ekran Vozac (za tab Timovi nema detalja)
+    if (opensDetail) {
+        row.setOnClickListener {
+            val intent = Intent(this, DriverDetailActivity::class.java)
+            intent.putExtra(DriverDetailActivity.EXTRA_DRIVER_POSITION, position)
+            startActivity(intent)
+        }
+    } else {
+        row.setOnClickListener(null)
+        row.isClickable = false
+    }
 }

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_sm"
         android:layout_marginEnd="@dimen/spacing_md"
-        app:layout_constraintEnd_toStartOf="@id/tvPoints"
+        app:layout_constraintEnd_toStartOf="@id/ivFavorite"
         app:layout_constraintStart_toEndOf="@id/tvPosition"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Vozač 1" />
@@ -39,7 +39,7 @@
         android:layout_marginTop="@dimen/spacing_xs"
         android:layout_marginEnd="@dimen/spacing_md"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tvPoints"
+        app:layout_constraintEnd_toStartOf="@id/ivFavorite"
         app:layout_constraintStart_toEndOf="@id/tvPosition"
         app:layout_constraintTop_toBottomOf="@id/tvDriverName"
         tools:text="Tim" />
@@ -53,4 +53,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="pts" />
+
+    <ImageView
+        android:id="@+id/ivFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_sm"
+        android:contentDescription="@string/desc_favorite"
+        android:src="@drawable/ic_star_filled"
+        android:tint="@color/accent_light"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvPoints"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

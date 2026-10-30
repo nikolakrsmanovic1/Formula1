@@ -21,6 +21,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
@@ -34,6 +37,9 @@
             android:exported="false" />
         <activity
             android:name=".RaceDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DriverDetailActivity"
             android:exported="false" />
     </application>
 

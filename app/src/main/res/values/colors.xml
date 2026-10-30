@@ -11,4 +11,25 @@
     <color name="accent_light">#FF6A63</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="icon_bg_start">#262633</color>
+    <color name="icon_bg_end">#0B0B11</color>
+    <color name="icon_red_dark">#8F0400</color>
+    <color name="icon_red_bright">#FF3B2F</color>
+    <color name="icon_track">#2E2E3F</color>
+    <color name="icon_tick_off">#5A5A70</color>
+    <color name="icon_bg_top">#3A141A</color>
+    <color name="icon_bg_mid">#1A1018</color>
+    <color name="icon_glow_start">#BFFF2A1F</color>
+    <color name="icon_glow_end">#00FF2A1F</color>
+    <color name="icon_stripe_red">#80D80600</color>
+    <color name="icon_stripe_white">#1AFFFFFF</color>
+    <color name="icon_stripe_red_soft">#59D80600</color>
+    <color name="icon_ground_start">#00000000</color>
+    <color name="icon_ground_end">#A6000000</color>
+    <color name="icon_shadow">#73000000</color>
+    <color name="icon_streak_white">#A6FFFFFF</color>
+    <color name="icon_streak_red">#E6FF3B2F</color>
+    <color name="icon_tire">#0B0B11</color>
+    <color name="icon_red_deep">#A30400</color>
+    <color name="icon_ring">#33FFFFFF</color>
 </resources>
