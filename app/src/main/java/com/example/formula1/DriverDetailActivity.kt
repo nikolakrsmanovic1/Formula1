@@ -2,7 +2,9 @@ package com.example.formula1
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class DriverDetailActivity : AppCompatActivity() {
@@ -22,6 +24,20 @@ class DriverDetailActivity : AppCompatActivity() {
         // Strelica nazad -> vraća na prethodni ekran
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
+        // Zvezdica -> dodaj ili ukloni iz omiljenih (cuva se samo jedan omiljeni vozac)
+        val btnFavorite = findViewById<ImageButton>(R.id.btnFavorite)
+        showFavorite(btnFavorite, position)
+        btnFavorite.setOnClickListener {
+            if (Favorites.get(this) == position) {
+                Favorites.clear(this)
+                Toast.makeText(this, R.string.toast_favorite_removed, Toast.LENGTH_SHORT).show()
+            } else {
+                Favorites.set(this, position)
+                Toast.makeText(this, R.string.toast_favorite_added, Toast.LENGTH_SHORT).show()
+            }
+            showFavorite(btnFavorite, position)
+        }
+
         // Kartice statistike (privremeni podaci, kasnije iz API-ja)
         val stats = listOf(
             R.id.stat1 to R.string.stat_wins,
@@ -38,6 +54,11 @@ class DriverDetailActivity : AppCompatActivity() {
             card.findViewById<TextView>(R.id.tvStatValue).setText(R.string.stat_value_placeholder)
             card.findViewById<TextView>(R.id.tvStatLabel).setText(labelRes)
         }
+    }
+
+    private fun showFavorite(button: ImageButton, position: Int) {
+        val isFavorite = Favorites.get(this) == position
+        button.setImageResource(if (isFavorite) R.drawable.ic_star_filled else R.drawable.ic_star)
     }
 
     companion object {

@@ -111,4 +111,13 @@
     <string name="error_password_short">Lozinka mora imati bar 6 karaktera</string>
     <string name="error_password_mismatch">Lozinke se ne poklapaju</string>
     <string name="toast_registered">Nalog je napravljen</string>
+
+    <!-- Omiljeni vozac -->
+    <string name="desc_favorite">Omiljeni vozač</string>
+    <string name="favorite_title">Tvoj omiljeni vozač</string>
+    <string name="favorite_empty">Izaberi omiljenog vozača</string>
+    <string name="setting_favorite">Omiljeni vozač</string>
+    <string name="setting_favorite_none">Nije izabran</string>
+    <string name="toast_favorite_added">Dodat u omiljene</string>
+    <string name="toast_favorite_removed">Uklonjen iz omiljenih</string>
 </resources>

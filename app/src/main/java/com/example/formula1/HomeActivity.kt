@@ -25,11 +25,30 @@ class HomeActivity : AppCompatActivity() {
         bindCountdown(R.id.cdMinutes, R.string.cd_minutes_value, R.string.cd_minutes_label)
         bindCountdown(R.id.cdSeconds, R.string.cd_seconds_value, R.string.cd_seconds_label)
 
-        // Top 3 vozača
+        // Kartica omiljenog vozaca bez izbora -> Poredak, gde se vozac bira
+        findViewById<View>(R.id.tvFavEmpty).setOnClickListener {
+            startActivity(Intent(this, StandingsActivity::class.java))
+        }
+    }
+
+    /** Osvezava omiljenog vozaca i Top 3 svaki put kad se vratimo na Pocetnu. */
+    override fun onResume() {
+        super.onResume()
+        bindFavorite()
         intArrayOf(R.id.driverRow1, R.id.driverRow2, R.id.driverRow3)
             .forEachIndexed { index, rowId ->
                 bindDriverRow(rowId, index + 1, R.string.driver_name_format, R.string.team_placeholder)
             }
+    }
+
+    private fun bindFavorite() {
+        val favorite = Favorites.get(this)
+        val hasFavorite = favorite != Favorites.NONE
+        findViewById<View>(R.id.favRow).visibility = if (hasFavorite) View.VISIBLE else View.GONE
+        findViewById<View>(R.id.tvFavEmpty).visibility = if (hasFavorite) View.GONE else View.VISIBLE
+        if (hasFavorite) {
+            bindDriverRow(R.id.favRow, favorite, R.string.driver_name_format, R.string.team_placeholder)
+        }
     }
 
     private fun bindCountdown(boxId: Int, valueRes: Int, labelRes: Int) {

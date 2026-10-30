@@ -67,6 +67,10 @@ fun Activity.bindDriverRow(
     row.findViewById<TextView>(R.id.tvDriverTeam).setText(subtitleRes)
     row.findViewById<TextView>(R.id.tvPoints).setText(R.string.points_placeholder)
 
+    // Zvezdica uz omiljenog vozaca (samo u listi vozaca)
+    val isFavorite = opensDetail && Favorites.get(this) == position
+    row.findViewById<View>(R.id.ivFavorite).visibility = if (isFavorite) View.VISIBLE else View.GONE
+
     // Klik na vozaca -> ekran Vozac (za tab Timovi nema detalja)
     if (opensDetail) {
         row.setOnClickListener {

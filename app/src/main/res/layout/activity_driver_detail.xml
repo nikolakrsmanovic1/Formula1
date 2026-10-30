@@ -31,8 +31,21 @@
         android:gravity="center"
         android:text="@string/driver_detail_title"
         app:layout_constraintBottom_toBottomOf="@id/btnBack"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnFavorite"
         app:layout_constraintStart_toEndOf="@id/btnBack"
+        app:layout_constraintTop_toTopOf="@id/btnBack" />
+
+    <ImageButton
+        android:id="@+id/btnFavorite"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:layout_marginEnd="@dimen/spacing_xl"
+        android:background="@drawable/bg_icon_button"
+        android:contentDescription="@string/desc_favorite"
+        android:src="@drawable/ic_star"
+        android:tint="@color/accent_light"
+        app:layout_constraintBottom_toBottomOf="@id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/btnBack" />
 
     <View

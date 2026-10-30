@@ -12,6 +12,8 @@ class StandingsActivity : AppCompatActivity() {
         R.id.driverRow5, R.id.driverRow6, R.id.driverRow7, R.id.driverRow8
     )
 
+    private var showingDrivers = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_standings)
@@ -23,8 +25,15 @@ class StandingsActivity : AppCompatActivity() {
         showTab(drivers = true)
     }
 
+    /** Kad se vratimo sa ekrana Vozac, osvezi zvezdicu omiljenog vozaca. */
+    override fun onResume() {
+        super.onResume()
+        showTab(drivers = showingDrivers)
+    }
+
     /** Prebacuje između poretka vozača i poretka timova. */
     private fun showTab(drivers: Boolean) {
+        showingDrivers = drivers
         styleTab(R.id.tabDrivers, active = drivers)
         styleTab(R.id.tabTeams, active = !drivers)
 
