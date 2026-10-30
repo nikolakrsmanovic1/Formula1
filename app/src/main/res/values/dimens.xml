@@ -46,4 +46,5 @@
     <dimen name="driver_photo_padding">34dp</dimen>
     <dimen name="stat_card_padding">16dp</dimen>
     <dimen name="stat_gap">6dp</dimen>
+    <integer name="min_password_length">6</integer>
 </resources>

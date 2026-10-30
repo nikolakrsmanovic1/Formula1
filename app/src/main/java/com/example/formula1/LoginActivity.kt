@@ -2,7 +2,6 @@ package com.example.formula1
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -18,9 +17,9 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        // Registracija još nije napravljena
+        // Nemaš nalog? Registruj se -> Registracija
         findViewById<android.view.View>(R.id.tvRegister).setOnClickListener {
-            Toast.makeText(this, R.string.toast_soon, Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 }
