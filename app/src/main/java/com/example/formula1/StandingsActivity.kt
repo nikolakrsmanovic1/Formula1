@@ -31,7 +31,7 @@ class StandingsActivity : AppCompatActivity() {
         val nameRes = if (drivers) R.string.driver_name_format else R.string.team_name_format
         val subtitleRes = if (drivers) R.string.team_placeholder else R.string.team_subtitle
         rows.forEachIndexed { index, rowId ->
-            bindDriverRow(rowId, index + 1, nameRes, subtitleRes)
+            bindDriverRow(rowId, index + 1, nameRes, subtitleRes, opensDetail = drivers)
         }
     }
 

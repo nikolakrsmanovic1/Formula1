@@ -81,4 +81,19 @@
         <item>Kvalifikacije</item>
         <item>Trka</item>
     </string-array>
+
+    <!-- Ekran vozaca -->
+    <string name="driver_detail_title">Vozač</string>
+    <string name="desc_driver_photo">Slika vozača</string>
+    <string name="driver_number_format">Startni broj %1$d</string>
+    <string name="driver_career_title">Statistika karijere</string>
+    <string name="stat_value_placeholder">–</string>
+    <string name="stat_wins">Pobede</string>
+    <string name="stat_poles">Pol pozicije</string>
+    <string name="stat_podiums">Podijumi</string>
+    <string name="stat_dnf">DNF</string>
+    <string name="stat_fastest_laps">Najbrži krugovi</string>
+    <string name="stat_titles">Titule</string>
+    <string name="stat_races">Trke</string>
+    <string name="stat_points">Bodovi</string>
 </resources>

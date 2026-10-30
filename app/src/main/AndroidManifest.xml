@@ -35,6 +35,9 @@
         <activity
             android:name=".RaceDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".DriverDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
