@@ -17,7 +17,7 @@
         android:background="@drawable/bg_icon_button"
         android:contentDescription="@string/desc_back"
         android:src="@drawable/ic_back"
-        android:tint="@color/ink"
+        app:tint="@color/ink"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,7 +43,7 @@
         android:background="@drawable/bg_icon_button"
         android:contentDescription="@string/desc_favorite"
         android:src="@drawable/ic_star"
-        android:tint="@color/accent_light"
+        app:tint="@color/accent_light"
         app:layout_constraintBottom_toBottomOf="@id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/btnBack" />
@@ -88,7 +88,7 @@
                 android:contentDescription="@string/desc_driver_photo"
                 android:padding="@dimen/driver_photo_padding"
                 android:src="@drawable/ic_user"
-                android:tint="@color/muted"
+                app:tint="@color/muted"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
