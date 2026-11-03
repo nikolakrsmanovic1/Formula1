@@ -41,6 +41,9 @@
         <activity
             android:name=".DriverDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".TeamDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

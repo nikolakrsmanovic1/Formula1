@@ -120,4 +120,12 @@
     <string name="setting_favorite_none">Nije izabran</string>
     <string name="toast_favorite_added">Dodat u omiljene</string>
     <string name="toast_favorite_removed">Uklonjen iz omiljenih</string>
+
+    <!-- Ekran tima -->
+    <string name="team_detail_title">Tim</string>
+    <string name="desc_team_logo">Logo tima</string>
+    <string name="team_position_format">Pozicija u poretku: %1$d</string>
+    <string name="team_stats_title">Statistika tima</string>
+    <string name="team_drivers_title">Vozači tima</string>
+    <string name="stat_constructor_titles">Titule konstruktora</string>
 </resources>
