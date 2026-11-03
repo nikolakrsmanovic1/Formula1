@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="min_password_length">6</integer>
+    <!-- Sezona 2026: 11 timova, 22 vozaca -->
+    <integer name="team_count">11</integer>
+    <integer name="driver_count">22</integer>
+</resources>
