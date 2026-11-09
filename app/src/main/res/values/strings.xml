@@ -128,4 +128,8 @@
     <string name="team_stats_title">Statistika tima</string>
     <string name="team_drivers_title">Vozači tima</string>
     <string name="stat_constructor_titles">Titule konstruktora</string>
+
+    <!-- Prazna lista -->
+    <string name="empty_races">Trenutno nema trka za prikaz</string>
+    <string name="empty_standings">Trenutno nema podataka o poretku</string>
 </resources>

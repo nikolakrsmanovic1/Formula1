@@ -64,249 +64,31 @@
         app:layout_constraintStart_toEndOf="@id/tabDrivers"
         app:layout_constraintTop_toTopOf="@id/tabDrivers" />
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvStandings"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/spacing_xs"
+        android:clipToPadding="false"
+        android:padding="@dimen/spacing_xl"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabDrivers">
+        app:layout_constraintTop_toBottomOf="@id/tabDrivers" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_xl">
-
-            <Space
-                android:id="@+id/listTop"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <include
-                android:id="@+id/driverRow1"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/listTop" />
-
-            <include
-                android:id="@+id/driverRow2"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow1" />
-
-            <include
-                android:id="@+id/driverRow3"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow2" />
-
-            <include
-                android:id="@+id/driverRow4"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow3" />
-
-            <include
-                android:id="@+id/driverRow5"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow4" />
-
-            <include
-                android:id="@+id/driverRow6"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow5" />
-
-            <include
-                android:id="@+id/driverRow7"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow6" />
-
-            <include
-                android:id="@+id/driverRow8"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow7" />
-
-            <include
-                android:id="@+id/driverRow9"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow8" />
-
-            <include
-                android:id="@+id/driverRow10"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow9" />
-
-            <include
-                android:id="@+id/driverRow11"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow10" />
-
-            <include
-                android:id="@+id/driverRow12"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow11" />
-
-            <include
-                android:id="@+id/driverRow13"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow12" />
-
-            <include
-                android:id="@+id/driverRow14"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow13" />
-
-            <include
-                android:id="@+id/driverRow15"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow14" />
-
-            <include
-                android:id="@+id/driverRow16"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow15" />
-
-            <include
-                android:id="@+id/driverRow17"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow16" />
-
-            <include
-                android:id="@+id/driverRow18"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow17" />
-
-            <include
-                android:id="@+id/driverRow19"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow18" />
-
-            <include
-                android:id="@+id/driverRow20"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow19" />
-
-            <include
-                android:id="@+id/driverRow21"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow20" />
-
-            <include
-                android:id="@+id/driverRow22"
-                layout="@layout/item_driver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driverRow21" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    <TextView
+        android:id="@+id/tvEmpty"
+        style="@style/TextMuted"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:padding="@dimen/spacing_xl"
+        android:text="@string/empty_standings"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabDrivers" />
 
     <include
         android:id="@+id/bottomNav"
