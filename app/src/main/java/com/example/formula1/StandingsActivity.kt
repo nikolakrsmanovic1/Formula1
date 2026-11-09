@@ -19,6 +19,9 @@ class StandingsActivity : AppCompatActivity() {
         R.id.driverRow21, R.id.driverRow22
     )
 
+    // Koji tab je trenutno prikazan (potrebno da se lista osvezi pri povratku na ekran)
+    private var showingDrivers = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_standings)
