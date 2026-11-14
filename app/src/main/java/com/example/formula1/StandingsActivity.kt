@@ -6,10 +6,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.formula1.databinding.ActivityStandingsBinding
 
 class StandingsActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityStandingsBinding
     private lateinit var adapter: StandingsAdapter
 
     // Koji tab je trenutno prikazan (vozaci ili timovi)
@@ -17,19 +18,21 @@ class StandingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_standings)
-        applyInsets()
-        setupBottomNav(NavTab.STANDINGS)
+        binding = ActivityStandingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        applyInsets(binding.root)
+        setupBottomNav(binding.bottomNav, NavTab.STANDINGS)
 
         // Klik na stavku: vozac -> ekran Vozac, tim -> ekran Tim
         adapter = StandingsAdapter { item -> openDetail(item) }
-        val list = findViewById<RecyclerView>(R.id.rvStandings)
-        list.layoutManager = LinearLayoutManager(this)
-        list.addItemDecoration(ItemSpacing(resources.getDimensionPixelSize(R.dimen.spacing_sm)))
-        list.adapter = adapter
+        binding.rvStandings.layoutManager = LinearLayoutManager(this)
+        binding.rvStandings.addItemDecoration(
+            ItemSpacing(resources.getDimensionPixelSize(R.dimen.spacing_sm))
+        )
+        binding.rvStandings.adapter = adapter
 
-        findViewById<TextView>(R.id.tabDrivers).setOnClickListener { showTab(drivers = true) }
-        findViewById<TextView>(R.id.tabTeams).setOnClickListener { showTab(drivers = false) }
+        binding.tabDrivers.setOnClickListener { showTab(drivers = true) }
+        binding.tabTeams.setOnClickListener { showTab(drivers = false) }
         showTab(drivers = true)
     }
 
@@ -42,8 +45,8 @@ class StandingsActivity : AppCompatActivity() {
     /** Prebacuje izmedju poretka vozaca i poretka timova (zamenjuje listu u adapteru). */
     private fun showTab(drivers: Boolean) {
         showingDrivers = drivers
-        styleTab(R.id.tabDrivers, active = drivers)
-        styleTab(R.id.tabTeams, active = !drivers)
+        styleTab(binding.tabDrivers, active = drivers)
+        styleTab(binding.tabTeams, active = !drivers)
 
         // Privremeni podaci (kasnije iz API-ja)
         val count = resources.getInteger(if (drivers) R.integer.driver_count else R.integer.team_count)
@@ -60,7 +63,7 @@ class StandingsActivity : AppCompatActivity() {
         adapter.setItems(items, driverList = drivers)
 
         // Prazna lista -> poruka umesto praznog ekrana
-        showEmptyMessage(findViewById(R.id.rvStandings), findViewById(R.id.tvEmpty), items.size)
+        showEmptyMessage(binding.rvStandings, binding.tvEmpty, items.size)
     }
 
     private fun openDetail(item: StandingItem) {
@@ -74,8 +77,7 @@ class StandingsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun styleTab(tabId: Int, active: Boolean) {
-        val tab = findViewById<TextView>(tabId)
+    private fun styleTab(tab: TextView, active: Boolean) {
         tab.setBackgroundResource(if (active) R.drawable.bg_tab_active else R.drawable.bg_card)
         tab.setTextColor(ContextCompat.getColor(this, if (active) R.color.white else R.color.ink))
     }

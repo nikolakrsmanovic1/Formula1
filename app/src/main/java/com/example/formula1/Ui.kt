@@ -11,13 +11,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.formula1.databinding.ItemDriverBinding
+import com.example.formula1.databinding.LayoutBottomNavBinding
 
 /** Tri glavna odeljka koja imaju donju navigaciju. */
 enum class NavTab { HOME, SCHEDULE, STANDINGS }
 
 /** Dodaje razmak ispod status bara i iznad navigacionog bara (potrebno na novijem Androidu). */
-fun Activity.applyInsets() {
-    val root = findViewById<View>(R.id.root)
+fun Activity.applyInsets(root: View) {
     ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
         val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
         v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
@@ -26,14 +27,13 @@ fun Activity.applyInsets() {
 }
 
 /** Povezuje donju navigaciju: oznaci aktivni tab i otvara ostale ekrane preko Intent-a. */
-fun Activity.setupBottomNav(active: NavTab) {
-    val tabs = listOf<Triple<Int, NavTab, Class<*>>>(
-        Triple(R.id.navHome, NavTab.HOME, HomeActivity::class.java),
-        Triple(R.id.navSchedule, NavTab.SCHEDULE, ScheduleActivity::class.java),
-        Triple(R.id.navStandings, NavTab.STANDINGS, StandingsActivity::class.java)
+fun Activity.setupBottomNav(nav: LayoutBottomNavBinding, active: NavTab) {
+    val tabs = listOf<Triple<TextView, NavTab, Class<*>>>(
+        Triple(nav.navHome, NavTab.HOME, HomeActivity::class.java),
+        Triple(nav.navSchedule, NavTab.SCHEDULE, ScheduleActivity::class.java),
+        Triple(nav.navStandings, NavTab.STANDINGS, StandingsActivity::class.java)
     )
-    for ((id, tab, target) in tabs) {
-        val item = findViewById<TextView>(id)
+    for ((item, tab, target) in tabs) {
         val isActive = tab == active
         val color = ContextCompat.getColor(this, if (isActive) R.color.accent_light else R.color.muted)
         item.setTextColor(color)
@@ -50,34 +50,32 @@ fun Activity.setupBottomNav(active: NavTab) {
 
 /** Popunjava jedan red liste vozaca (ili timova). */
 fun Activity.bindDriverRow(
-    rowId: Int,
+    row: ItemDriverBinding,
     position: Int,
     nameRes: Int,
     subtitleRes: Int,
     opensDetail: Boolean = true
 ) {
-    val row = findViewById<View>(rowId)
-    val positionView = row.findViewById<TextView>(R.id.tvPosition)
-    positionView.text = getString(R.string.position_format, position)
-    positionView.setTextColor(ContextCompat.getColor(this, positionColorRes(position)))
-    row.findViewById<TextView>(R.id.tvDriverName).text = getString(nameRes, position)
-    row.findViewById<TextView>(R.id.tvDriverTeam).setText(subtitleRes)
-    row.findViewById<TextView>(R.id.tvPoints).setText(R.string.points_placeholder)
+    row.tvPosition.text = getString(R.string.position_format, position)
+    row.tvPosition.setTextColor(ContextCompat.getColor(this, positionColorRes(position)))
+    row.tvDriverName.text = getString(nameRes, position)
+    row.tvDriverTeam.setText(subtitleRes)
+    row.tvPoints.setText(R.string.points_placeholder)
 
     // Zvezdica uz omiljenog vozaca (samo u listi vozaca)
     val isFavorite = opensDetail && Favorites.get(this) == position
-    row.findViewById<View>(R.id.ivFavorite).visibility = if (isFavorite) View.VISIBLE else View.GONE
+    row.ivFavorite.visibility = if (isFavorite) View.VISIBLE else View.GONE
 
     // Klik na vozaca -> ekran Vozac (za tab Timovi nema detalja)
     if (opensDetail) {
-        row.setOnClickListener {
+        row.root.setOnClickListener {
             val intent = Intent(this, DriverDetailActivity::class.java)
             intent.putExtra(DriverDetailActivity.EXTRA_DRIVER_POSITION, position)
             startActivity(intent)
         }
     } else {
-        row.setOnClickListener(null)
-        row.isClickable = false
+        row.root.setOnClickListener(null)
+        row.root.isClickable = false
     }
 }
 

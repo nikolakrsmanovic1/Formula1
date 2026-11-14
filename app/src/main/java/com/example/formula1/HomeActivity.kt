@@ -2,31 +2,34 @@ package com.example.formula1
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.formula1.databinding.ActivityHomeBinding
+import com.example.formula1.databinding.ItemCountdownBinding
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        applyInsets()
-        setupBottomNav(NavTab.HOME)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        applyInsets(binding.root)
+        setupBottomNav(binding.bottomNav, NavTab.HOME)
 
         // Ikonica korisnika -> Profil
-        findViewById<View>(R.id.btnProfile).setOnClickListener {
+        binding.btnProfile.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
 
         // Odbrojavanje (privremeni podaci, kasnije iz API-ja)
-        bindCountdown(R.id.cdDays, R.string.cd_days_value, R.string.cd_days_label)
-        bindCountdown(R.id.cdHours, R.string.cd_hours_value, R.string.cd_hours_label)
-        bindCountdown(R.id.cdMinutes, R.string.cd_minutes_value, R.string.cd_minutes_label)
-        bindCountdown(R.id.cdSeconds, R.string.cd_seconds_value, R.string.cd_seconds_label)
+        bindCountdown(binding.cdDays, R.string.cd_days_value, R.string.cd_days_label)
+        bindCountdown(binding.cdHours, R.string.cd_hours_value, R.string.cd_hours_label)
+        bindCountdown(binding.cdMinutes, R.string.cd_minutes_value, R.string.cd_minutes_label)
+        bindCountdown(binding.cdSeconds, R.string.cd_seconds_value, R.string.cd_seconds_label)
 
         // Kartica omiljenog vozaca bez izbora -> Poredak, gde se vozac bira
-        findViewById<View>(R.id.tvFavEmpty).setOnClickListener {
+        binding.tvFavEmpty.setOnClickListener {
             startActivity(Intent(this, StandingsActivity::class.java))
         }
     }
@@ -35,25 +38,24 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         bindFavorite()
-        intArrayOf(R.id.driverRow1, R.id.driverRow2, R.id.driverRow3)
-            .forEachIndexed { index, rowId ->
-                bindDriverRow(rowId, index + 1, R.string.driver_name_format, R.string.team_placeholder)
+        listOf(binding.driverRow1, binding.driverRow2, binding.driverRow3)
+            .forEachIndexed { index, row ->
+                bindDriverRow(row, index + 1, R.string.driver_name_format, R.string.team_placeholder)
             }
     }
 
     private fun bindFavorite() {
         val favorite = Favorites.get(this)
         val hasFavorite = favorite != Favorites.NONE
-        findViewById<View>(R.id.favRow).visibility = if (hasFavorite) View.VISIBLE else View.GONE
-        findViewById<View>(R.id.tvFavEmpty).visibility = if (hasFavorite) View.GONE else View.VISIBLE
+        binding.favRow.root.visibility = if (hasFavorite) android.view.View.VISIBLE else android.view.View.GONE
+        binding.tvFavEmpty.visibility = if (hasFavorite) android.view.View.GONE else android.view.View.VISIBLE
         if (hasFavorite) {
-            bindDriverRow(R.id.favRow, favorite, R.string.driver_name_format, R.string.team_placeholder)
+            bindDriverRow(binding.favRow, favorite, R.string.driver_name_format, R.string.team_placeholder)
         }
     }
 
-    private fun bindCountdown(boxId: Int, valueRes: Int, labelRes: Int) {
-        val box = findViewById<View>(boxId)
-        box.findViewById<TextView>(R.id.tvCdValue).setText(valueRes)
-        box.findViewById<TextView>(R.id.tvCdLabel).setText(labelRes)
+    private fun bindCountdown(box: ItemCountdownBinding, valueRes: Int, labelRes: Int) {
+        box.tvCdValue.setText(valueRes)
+        box.tvCdLabel.setText(labelRes)
     }
 }
