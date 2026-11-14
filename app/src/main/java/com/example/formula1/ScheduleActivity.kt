@@ -2,21 +2,23 @@ package com.example.formula1
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.formula1.databinding.ActivityScheduleBinding
 
 class ScheduleActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityScheduleBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_schedule)
-        applyInsets()
-        setupBottomNav(NavTab.SCHEDULE)
+        binding = ActivityScheduleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        applyInsets(binding.root)
+        setupBottomNav(binding.bottomNav, NavTab.SCHEDULE)
 
-        findViewById<View>(R.id.btnFilter).setOnClickListener {
+        binding.btnFilter.setOnClickListener {
             Toast.makeText(this, R.string.toast_soon, Toast.LENGTH_SHORT).show()
         }
 
@@ -31,10 +33,11 @@ class ScheduleActivity : AppCompatActivity() {
         }
 
         // RecyclerView: LayoutManager rasporedjuje stavke, Adapter ih pravi i popunjava
-        val list = findViewById<RecyclerView>(R.id.rvRaces)
-        list.layoutManager = LinearLayoutManager(this)
-        list.addItemDecoration(ItemSpacing(resources.getDimensionPixelSize(R.dimen.spacing_sm)))
-        list.adapter = RaceAdapter(races) { race ->
+        binding.rvRaces.layoutManager = LinearLayoutManager(this)
+        binding.rvRaces.addItemDecoration(
+            ItemSpacing(resources.getDimensionPixelSize(R.dimen.spacing_sm))
+        )
+        binding.rvRaces.adapter = RaceAdapter(races) { race ->
             // Klik na trku -> Detalj trke (salje broj trke preko Intent-a)
             val intent = Intent(this, RaceDetailActivity::class.java)
             intent.putExtra(RaceDetailActivity.EXTRA_RACE_NUMBER, race.number)
@@ -42,6 +45,6 @@ class ScheduleActivity : AppCompatActivity() {
         }
 
         // Prazna lista -> poruka umesto praznog ekrana
-        showEmptyMessage(list, findViewById(R.id.tvEmpty), races.size)
+        showEmptyMessage(binding.rvRaces, binding.tvEmpty, races.size)
     }
 }
