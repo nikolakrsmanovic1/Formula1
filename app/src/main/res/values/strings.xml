@@ -9,16 +9,9 @@
     <string name="nav_schedule">Raspored</string>
     <string name="nav_standings">Poredak</string>
     <string name="position_format">%1$d</string>
-    <string name="driver_name_format">Vozač %1$d</string>
-    <string name="team_name_format">Tim %1$d</string>
     <string name="team_placeholder">Tim</string>
     <string name="team_subtitle">Konstruktor</string>
-    <string name="points_placeholder">pts</string>
-    <string name="race_name_format">R%1$d Naziv trke</string>
     <string name="race_round_format">R%1$d</string>
-    <string name="race_name_placeholder">Naziv trke</string>
-    <string name="race_place_placeholder">Grad, država</string>
-    <string name="race_date_placeholder">datum</string>
 
     <!-- 1 Prijava -->
     <string name="login_logo">F1</string>
@@ -37,13 +30,9 @@
     <string name="next_race_label">Sledeća trka</string>
     <string name="next_race_name">Naziv trke</string>
     <string name="next_race_place">Mesto, datum</string>
-    <string name="cd_days_value">11</string>
-    <string name="cd_hours_value">03</string>
-    <string name="cd_minutes_value">42</string>
     <string name="cd_days_label">dana</string>
     <string name="cd_hours_label">sati</string>
     <string name="cd_minutes_label">minuta</string>
-    <string name="cd_seconds_value">18</string>
     <string name="cd_seconds_label">sekundi</string>
     <string name="top3_title">Top 3 u šampionatu</string>
 
@@ -72,15 +61,7 @@
     <!-- 6 Detalj trke -->
     <string name="detail_image">Slika staze</string>
     <string name="detail_location">Grad, država, runda</string>
-    <string name="session_time_placeholder">dan, sat</string>
     <string name="btn_results">Rezultati</string>
-    <string-array name="session_names">
-        <item>Trening 1</item>
-        <item>Trening 2</item>
-        <item>Trening 3</item>
-        <item>Kvalifikacije</item>
-        <item>Trka</item>
-    </string-array>
 
     <!-- Ekran vozaca -->
     <string name="driver_detail_title">Vozač</string>
@@ -95,7 +76,7 @@
     <string name="stat_fastest_laps">Najbrži krugovi</string>
     <string name="stat_titles">Titule</string>
     <string name="stat_races">Trke</string>
-    <string name="stat_points">Bodovi</string>
+    <string name="stat_points">Bodovi u sezoni</string>
 
     <!-- Registracija -->
     <string name="register_title">Napravi nalog</string>
@@ -132,4 +113,26 @@
     <!-- Prazna lista -->
     <string name="empty_races">Trenutno nema trka za prikaz</string>
     <string name="empty_standings">Trenutno nema podataka o poretku</string>
+
+    <!-- Ucitavanje podataka sa interneta -->
+    <string name="loading">Učitavanje…</string>
+    <string name="stats_loading">Učitavam statistiku…</string>
+    <string name="error_network">Nema veze sa internetom. Dodirni za ponovni pokušaj.</string>
+    <string name="error_server">Server trenutno ne odgovara. Dodirni za ponovni pokušaj.</string>
+    <string name="error_unknown">Došlo je do greške. Dodirni za ponovni pokušaj.</string>
+    <string name="next_race_season_over">Sezona je završena</string>
+    <string name="next_race_place_format">%1$s, %2$s · %3$s</string>
+    <string name="detail_location_format">%1$s, %2$s · runda %3$d</string>
+    <string name="race_not_found">Trka nije pronađena</string>
+    <string name="driver_not_found">Vozač nije pronađen u poretku</string>
+    <string name="team_not_found">Tim nije pronađen u poretku</string>
+    <string name="points_format">%1$s bod.</string>
+    <string name="cd_value_format">%1$02d</string>
+    <string name="session_fp1">Trening 1</string>
+    <string name="session_fp2">Trening 2</string>
+    <string name="session_fp3">Trening 3</string>
+    <string name="session_sprint_qualifying">Sprint kvalifikacije</string>
+    <string name="session_sprint">Sprint</string>
+    <string name="session_qualifying">Kvalifikacije</string>
+    <string name="session_race">Trka</string>
 </resources>

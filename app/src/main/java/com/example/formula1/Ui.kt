@@ -1,16 +1,20 @@
 package com.example.formula1
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Typeface
 import android.graphics.Rect
+import android.graphics.Typeface
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.formula1.model.ErrorKind
+import com.example.formula1.viewmodel.StandingItem
+import com.example.formula1.viewmodel.UiState
 
 /** Tri glavna odeljka koja imaju donju navigaciju. */
 enum class NavTab { HOME, SCHEDULE, STANDINGS }
@@ -48,38 +52,64 @@ fun Activity.setupBottomNav(active: NavTab) {
     }
 }
 
-/** Popunjava jedan red liste vozaca (ili timova). */
-fun Activity.bindDriverRow(
-    rowId: Int,
-    position: Int,
-    nameRes: Int,
-    subtitleRes: Int,
-    opensDetail: Boolean = true
+// --- Prikaz stanja (UiState) ---
+
+fun View.setVisible(visible: Boolean) {
+    visibility = if (visible) View.VISIBLE else View.GONE
+}
+
+/** Poruka za gresku, na osnovu vrste greske koju javi ViewModel. */
+fun errorMessageRes(kind: ErrorKind): Int = when (kind) {
+    ErrorKind.NETWORK -> R.string.error_network
+    ErrorKind.SERVER -> R.string.error_server
+    ErrorKind.UNKNOWN -> R.string.error_unknown
+}
+
+/**
+ * Prikazuje samo onaj deo ekrana koji odgovara stanju: spiner, listu, poruku o praznoj listi
+ * ili poruku o gresci. Kad stignu podaci, poziva onSuccess.
+ */
+fun <T> renderListState(
+    state: UiState<T>,
+    list: View,
+    progress: View,
+    empty: View,
+    error: TextView,
+    onSuccess: (T) -> Unit
 ) {
-    val row = findViewById<View>(rowId)
-    val positionView = row.findViewById<TextView>(R.id.tvPosition)
-    positionView.text = getString(R.string.position_format, position)
-    positionView.setTextColor(ContextCompat.getColor(this, positionColorRes(position)))
-    row.findViewById<TextView>(R.id.tvDriverName).text = getString(nameRes, position)
-    row.findViewById<TextView>(R.id.tvDriverTeam).setText(subtitleRes)
-    row.findViewById<TextView>(R.id.tvPoints).setText(R.string.points_placeholder)
-
-    // Zvezdica uz omiljenog vozaca (samo u listi vozaca)
-    val isFavorite = opensDetail && Favorites.get(this) == position
-    row.findViewById<View>(R.id.ivFavorite).visibility = if (isFavorite) View.VISIBLE else View.GONE
-
-    // Klik na vozaca -> ekran Vozac (za tab Timovi nema detalja)
-    if (opensDetail) {
-        row.setOnClickListener {
-            val intent = Intent(this, DriverDetailActivity::class.java)
-            intent.putExtra(DriverDetailActivity.EXTRA_DRIVER_POSITION, position)
-            startActivity(intent)
-        }
-    } else {
-        row.setOnClickListener(null)
-        row.isClickable = false
+    list.setVisible(state is UiState.Success)
+    progress.setVisible(state is UiState.Loading)
+    empty.setVisible(state is UiState.Empty)
+    error.setVisible(state is UiState.Error)
+    when (state) {
+        is UiState.Success -> onSuccess(state.data)
+        is UiState.Error -> error.setText(errorMessageRes(state.kind))
+        is UiState.Loading, is UiState.Empty -> Unit
     }
 }
+
+// --- Prelazak na ekrane sa detaljima ---
+
+fun Activity.openDriver(driverId: String) {
+    val intent = Intent(this, DriverDetailActivity::class.java)
+    intent.putExtra(DriverDetailActivity.EXTRA_DRIVER_ID, driverId)
+    startActivity(intent)
+}
+
+fun Activity.openTeam(teamId: String) {
+    val intent = Intent(this, TeamDetailActivity::class.java)
+    intent.putExtra(TeamDetailActivity.EXTRA_TEAM_ID, teamId)
+    startActivity(intent)
+}
+
+// --- Redovi poretka ---
+
+fun positionText(context: Context, position: Int): String =
+    if (position > 0) context.getString(R.string.position_format, position)
+    else context.getString(R.string.stat_value_placeholder)
+
+fun pointsText(context: Context, points: String): String =
+    if (points.isBlank()) "" else context.getString(R.string.points_format, points)
 
 /** Boja pozicije u poretku: 1. mesto akcent, 2. i 3. bela, ostali prigusena. */
 fun positionColorRes(position: Int): Int = when (position) {
@@ -88,11 +118,26 @@ fun positionColorRes(position: Int): Int = when (position) {
     else -> R.color.muted
 }
 
-/** Ako je lista prazna, sakrije listu i prikaze poruku umesto praznog ekrana. */
-fun showEmptyMessage(list: View, emptyMessage: View, itemCount: Int) {
-    val isEmpty = itemCount == 0
-    list.visibility = if (isEmpty) View.GONE else View.VISIBLE
-    emptyMessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
+/** Popunjava jedan red iz layouta item_driver (koji je ubacen preko include). Prazan id = red bez klika. */
+fun Activity.bindDriverRow(rowId: Int, item: StandingItem) {
+    val row = findViewById<View>(rowId)
+    val positionView = row.findViewById<TextView>(R.id.tvPosition)
+    positionView.text = positionText(this, item.position)
+    positionView.setTextColor(ContextCompat.getColor(this, positionColorRes(item.position)))
+    row.findViewById<TextView>(R.id.tvDriverName).text = item.title
+    row.findViewById<TextView>(R.id.tvDriverTeam).text = item.subtitle
+    row.findViewById<TextView>(R.id.tvPoints).text = pointsText(this, item.points)
+    row.findViewById<View>(R.id.ivFavorite)
+        .setVisible(item.isDriver && Favorites.getId(this) == item.id)
+
+    if (item.id.isEmpty()) {
+        row.setOnClickListener(null)
+        row.isClickable = false
+    } else {
+        row.setOnClickListener {
+            if (item.isDriver) openDriver(item.id) else openTeam(item.id)
+        }
+    }
 }
 
 /** Razmak izmedju stavki u RecyclerView-u. */
