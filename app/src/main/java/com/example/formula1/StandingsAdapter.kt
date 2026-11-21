@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.formula1.viewmodel.StandingItem
 
 /**
  * Adapter za poredak. Isti adapter prikazuje i vozace i timove (tab Vozaci / Timovi),
@@ -16,7 +17,6 @@ class StandingsAdapter(
 ) : RecyclerView.Adapter<StandingsAdapter.StandingViewHolder>() {
 
     private var items: List<StandingItem> = emptyList()
-    private var isDriverList = true
 
     class StandingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val position: TextView = view.findViewById(R.id.tvPosition)
@@ -27,9 +27,8 @@ class StandingsAdapter(
     }
 
     /** Menja prikazanu listu (vozaci ili timovi) i osvezava ekran. */
-    fun setItems(newItems: List<StandingItem>, driverList: Boolean) {
+    fun setItems(newItems: List<StandingItem>) {
         items = newItems
-        isDriverList = driverList
         notifyDataSetChanged()
     }
 
@@ -41,17 +40,15 @@ class StandingsAdapter(
 
     override fun onBindViewHolder(holder: StandingViewHolder, position: Int) {
         val item = items[position]
-        holder.position.text = holder.itemView.context.getString(R.string.position_format, item.position)
-        holder.position.setTextColor(
-            ContextCompat.getColor(holder.itemView.context, positionColorRes(item.position))
-        )
+        val context = holder.itemView.context
+        holder.position.text = positionText(context, item.position)
+        holder.position.setTextColor(ContextCompat.getColor(context, positionColorRes(item.position)))
         holder.title.text = item.title
         holder.subtitle.text = item.subtitle
-        holder.points.text = item.points
+        holder.points.text = pointsText(context, item.points)
 
         // Zvezdica samo uz omiljenog vozaca (ne u listi timova)
-        val isFavorite = isDriverList && Favorites.get(holder.itemView.context) == item.position
-        holder.favoriteStar.visibility = if (isFavorite) View.VISIBLE else View.GONE
+        holder.favoriteStar.setVisible(item.isDriver && Favorites.getId(context) == item.id)
 
         holder.itemView.setOnClickListener { onItemClick(item) }
     }

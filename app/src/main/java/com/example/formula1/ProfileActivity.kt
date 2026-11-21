@@ -27,13 +27,11 @@ class ProfileActivity : AppCompatActivity() {
 
         // Omiljeni vozac: otvara ga ako je izabran, a ako nije vodi na Poredak
         findViewById<View>(R.id.settingRow4).setOnClickListener {
-            val favorite = Favorites.get(this)
-            if (favorite == Favorites.NONE) {
+            val favoriteId = Favorites.getId(this)
+            if (favoriteId == null) {
                 startActivity(Intent(this, StandingsActivity::class.java))
             } else {
-                val intent = Intent(this, DriverDetailActivity::class.java)
-                intent.putExtra(DriverDetailActivity.EXTRA_DRIVER_POSITION, favorite)
-                startActivity(intent)
+                openDriver(favoriteId)
             }
         }
 
@@ -50,10 +48,8 @@ class ProfileActivity : AppCompatActivity() {
         super.onResume()
         val row = findViewById<View>(R.id.settingRow4)
         row.findViewById<TextView>(R.id.tvSettingTitle).setText(R.string.setting_favorite)
-        val favorite = Favorites.get(this)
         row.findViewById<TextView>(R.id.tvSettingValue).text =
-            if (favorite == Favorites.NONE) getString(R.string.setting_favorite_none)
-            else getString(R.string.driver_name_format, favorite)
+            Favorites.getName(this) ?: getString(R.string.setting_favorite_none)
     }
 
     private fun bindSetting(rowId: Int, titleRes: Int, valueRes: Int) {
