@@ -61,6 +61,13 @@ class TeamDetailActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.titles.observe(this) { state ->
+            if (state is UiState.Success) {
+                findViewById<View>(R.id.stat1).findViewById<TextView>(R.id.tvStatValue).text =
+                    state.data.toString()
+            }
+        }
+
         viewModel.stats.observe(this) { state ->
             status.setVisible(state !is UiState.Success)
             when (state) {
@@ -98,10 +105,10 @@ class TeamDetailActivity : AppCompatActivity() {
     }
 
     private fun showStats(stats: TeamStats) {
-        val values = listOf(stats.titles, stats.wins, stats.poles, stats.podiums, stats.fastestLaps)
-        for ((id, value) in statIds.zip(values)) {
-            findViewById<View>(id).findViewById<TextView>(R.id.tvStatValue).text =
-                value?.toString() ?: getString(R.string.stat_value_placeholder)
+        // stat1 (titule) stize odvojeno, preko viewModel.titles
+        val values = listOf(stats.wins, stats.poles, stats.podiums, stats.fastestLaps)
+        for ((id, value) in statIds.drop(1).zip(values)) {
+            findViewById<View>(id).findViewById<TextView>(R.id.tvStatValue).text = value.toString()
         }
     }
 

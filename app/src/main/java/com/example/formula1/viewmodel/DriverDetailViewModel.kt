@@ -25,6 +25,9 @@ class DriverDetailViewModel(
     private val _stats = MutableLiveData<UiState<DriverStats>>(UiState.Loading)
     val stats: LiveData<UiState<DriverStats>> get() = _stats
 
+    private val _titles = MutableLiveData<UiState<Int>>(UiState.Loading)
+    val titles: LiveData<UiState<Int>> get() = _titles
+
     init {
         load()
     }
@@ -43,6 +46,14 @@ class DriverDetailViewModel(
             _stats.value = UiState.Loading
             _stats.value = try {
                 UiState.Success(repository.getDriverStats(driverId))
+            } catch (e: DataException) {
+                UiState.Error(e.kind)
+            }
+        }
+        viewModelScope.launch {
+            _titles.value = UiState.Loading
+            _titles.value = try {
+                UiState.Success(repository.getDriverTitles(driverId))
             } catch (e: DataException) {
                 UiState.Error(e.kind)
             }

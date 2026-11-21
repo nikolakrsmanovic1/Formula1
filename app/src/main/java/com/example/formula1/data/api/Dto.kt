@@ -86,3 +86,9 @@ data class StatusResponse(@SerializedName("MRData") val mrData: StatusMrData?)
 data class StatusMrData(@SerializedName("StatusTable") val table: StatusTableDto?)
 data class StatusTableDto(@SerializedName("Status") val status: List<StatusDto>?)
 data class StatusDto(val statusId: String?, val count: String?, val status: String?)
+
+// --- Sezone u kojima je vozac ili tim ucestvovao ---
+data class SeasonsResponse(@SerializedName("MRData") val mrData: SeasonsMrData?)
+data class SeasonsMrData(@SerializedName("SeasonTable") val table: SeasonTableDto?)
+data class SeasonTableDto(@SerializedName("Seasons") val seasons: List<SeasonDto>?)
+data class SeasonDto(val season: String?)

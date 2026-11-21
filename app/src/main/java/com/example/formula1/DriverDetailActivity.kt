@@ -66,6 +66,11 @@ class DriverDetailActivity : AppCompatActivity() {
             }
         }
 
+        // Titule se ucitavaju odvojeno (trazi vise poziva), pa kartica ostaje "-" dok ne stignu
+        viewModel.titles.observe(this) { state ->
+            if (state is UiState.Success) setStat(5, state.data.toString())
+        }
+
         viewModel.stats.observe(this) { state ->
             status.setVisible(state !is UiState.Success)
             when (state) {
@@ -101,7 +106,6 @@ class DriverDetailActivity : AppCompatActivity() {
         setStat(2, stats.podiums.toString())
         setStat(3, stats.dnf.toString())
         setStat(4, stats.fastestLaps.toString())
-        setStat(5, stats.titles?.toString() ?: getString(R.string.stat_value_placeholder))
         setStat(6, stats.races.toString())
     }
 

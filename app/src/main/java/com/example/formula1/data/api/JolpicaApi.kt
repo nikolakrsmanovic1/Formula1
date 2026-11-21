@@ -39,6 +39,13 @@ interface JolpicaApi {
         @Query("limit") limit: Int
     ): ConstructorStandingsResponse
 
+    /** Sezone u kojima je vozac ili tim ucestvovao, npr. drivers/alonso/seasons.json. */
+    @GET("f1/{path}")
+    suspend fun getSeasons(
+        @Path(value = "path", encoded = true) path: String,
+        @Query("limit") limit: Int
+    ): SeasonsResponse
+
     /** Koliko puta se vozac ili tim zavrsio trku na koji nacin, npr. drivers/alonso/status.json. */
     @GET("f1/{path}")
     suspend fun getStatuses(

@@ -17,4 +17,8 @@ interface F1DataSource {
     suspend fun teamStandings(): List<TeamStanding>
     suspend fun driverStats(driverId: String): DriverStats
     suspend fun teamStats(teamId: String): TeamStats
+
+    /** Broj osvojenih titula (trazi dosta poziva, pa se ucitava odvojeno od ostale statistike). */
+    suspend fun driverTitles(driverId: String): Int
+    suspend fun teamTitles(teamId: String): Int
 }

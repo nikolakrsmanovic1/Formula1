@@ -21,6 +21,9 @@ class TeamDetailViewModel(
     private val _stats = MutableLiveData<UiState<TeamStats>>(UiState.Loading)
     val stats: LiveData<UiState<TeamStats>> get() = _stats
 
+    private val _titles = MutableLiveData<UiState<Int>>(UiState.Loading)
+    val titles: LiveData<UiState<Int>> get() = _titles
+
     init {
         load()
     }
@@ -44,6 +47,14 @@ class TeamDetailViewModel(
             _stats.value = UiState.Loading
             _stats.value = try {
                 UiState.Success(repository.getTeamStats(teamId))
+            } catch (e: DataException) {
+                UiState.Error(e.kind)
+            }
+        }
+        viewModelScope.launch {
+            _titles.value = UiState.Loading
+            _titles.value = try {
+                UiState.Success(repository.getTeamTitles(teamId))
             } catch (e: DataException) {
                 UiState.Error(e.kind)
             }

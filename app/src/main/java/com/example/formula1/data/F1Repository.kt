@@ -50,6 +50,19 @@ class F1Repository(private val source: F1DataSource) {
         return cache.get() ?: source.teamStats(teamId).also { cache.put(it) }
     }
 
+    private val driverTitlesCache = HashMap<String, TimedCache<Int>>()
+    private val teamTitlesCache = HashMap<String, TimedCache<Int>>()
+
+    suspend fun getDriverTitles(driverId: String): Int {
+        val cache = driverTitlesCache.getOrPut(driverId) { TimedCache(STATS_TTL_MILLIS) }
+        return cache.get() ?: source.driverTitles(driverId).also { cache.put(it) }
+    }
+
+    suspend fun getTeamTitles(teamId: String): Int {
+        val cache = teamTitlesCache.getOrPut(teamId) { TimedCache(STATS_TTL_MILLIS) }
+        return cache.get() ?: source.teamTitles(teamId).also { cache.put(it) }
+    }
+
     private companion object {
         const val LIST_TTL_MILLIS = 10 * 60 * 1000L
         const val STATS_TTL_MILLIS = 60 * 60 * 1000L
