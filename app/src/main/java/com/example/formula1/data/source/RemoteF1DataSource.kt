@@ -63,7 +63,7 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
             val poles = async { total("$base/qualifying/1.json") }
             val fastest = async { total("$base/fastest/1/results.json") }
             val races = async { total("$base/results.json") }
-            val titles = async { driverTitles("$base/driverstandings/1.json") }
+            val titles = async { driverTitles(driverId) }
             val dnf = async { dnfCount("$base/status.json") }
             val winCount = wins.await()
             DriverStats(
@@ -86,7 +86,7 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
             val third = async { total("$base/results/3.json") }
             val poles = async { total("$base/qualifying/1.json") }
             val fastest = async { total("$base/fastest/1/results.json") }
-            val titles = async { teamTitles("$base/constructorstandings/1.json") }
+            val titles = async { teamTitles(teamId) }
             val winCount = wins.await()
             TeamStats(
                 titles = titles.await(),
@@ -123,15 +123,35 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
         api.getTotal(path, 1).mrData?.total?.toIntOrNull() ?: 0
     }
 
-    /** Broj sezona u kojima je vozac zavrsio na prvom mestu. */
-    private suspend fun driverTitles(path: String): Int = limiter.withPermit {
-        delay(PAUSE_MILLIS)
-        api.getDriverStandingsAt(path, LIMIT_ALL).mrData?.table?.lists.orEmpty().size
+    /**
+     * Titule: jedan poziv vraca sampiona svake sezone (f1/driverstandings/1.json), pa samo
+     * prebrojimo sezone u kojima je prvi bio nas vozac. Sezona koja jos traje se ne racuna.
+     */
+    private suspend fun driverTitles(driverId: String): Int {
+        val unfinished = unfinishedSeason()
+        return limiter.withPermit {
+            delay(PAUSE_MILLIS)
+            api.getDriverStandingsAt("driverstandings/1.json", LIMIT_ALL).mrData?.table?.lists.orEmpty()
+        }.filter { it.season != unfinished }
+            .count { list -> list.standings.orEmpty().any { it.driver?.driverId == driverId } }
     }
 
-    private suspend fun teamTitles(path: String): Int = limiter.withPermit {
-        delay(PAUSE_MILLIS)
-        api.getConstructorStandingsAt(path, LIMIT_ALL).mrData?.table?.lists.orEmpty().size
+    private suspend fun teamTitles(teamId: String): Int {
+        val unfinished = unfinishedSeason()
+        return limiter.withPermit {
+            delay(PAUSE_MILLIS)
+            api.getConstructorStandingsAt("constructorstandings/1.json", LIMIT_ALL).mrData?.table?.lists.orEmpty()
+        }.filter { it.season != unfinished }
+            .count { list -> list.standings.orEmpty().any { it.constructor?.constructorId == teamId } }
+    }
+
+    /** Godina sezone koja jos traje (poslednja trka u kalendaru je u buducnosti), inace null. */
+    private suspend fun unfinishedSeason(): String? {
+        val last = races().lastOrNull() ?: return null
+        if (last.startMillis < System.currentTimeMillis()) return null
+        val format = SimpleDateFormat("yyyy", Locale.US)
+        format.timeZone = TimeZone.getTimeZone("UTC")
+        return format.format(java.util.Date(last.startMillis))
     }
 
     /** DNF = trke koje nisu zavrsene regularno ("Finished" ili "+N Lap(s)"). */

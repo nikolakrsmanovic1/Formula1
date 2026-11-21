@@ -36,7 +36,9 @@ data class LocationDto(val locality: String?, val country: String?)
 data class DriverStandingsResponse(@SerializedName("MRData") val mrData: DriverStandingsMrData?)
 data class DriverStandingsMrData(@SerializedName("StandingsTable") val table: DriverStandingsTable?)
 data class DriverStandingsTable(@SerializedName("StandingsLists") val lists: List<DriverStandingsList>?)
-data class DriverStandingsList(@SerializedName("DriverStandings") val standings: List<DriverStandingDto>?)
+data class DriverStandingsList(
+    val season: String?,
+    @SerializedName("DriverStandings") val standings: List<DriverStandingDto>?)
 
 data class DriverStandingDto(
     val position: String?,
@@ -58,7 +60,9 @@ data class DriverDto(
 data class ConstructorStandingsResponse(@SerializedName("MRData") val mrData: ConstructorStandingsMrData?)
 data class ConstructorStandingsMrData(@SerializedName("StandingsTable") val table: ConstructorStandingsTable?)
 data class ConstructorStandingsTable(@SerializedName("StandingsLists") val lists: List<ConstructorStandingsList>?)
-data class ConstructorStandingsList(@SerializedName("ConstructorStandings") val standings: List<ConstructorStandingDto>?)
+data class ConstructorStandingsList(
+    val season: String?,
+    @SerializedName("ConstructorStandings") val standings: List<ConstructorStandingDto>?)
 
 data class ConstructorStandingDto(
     val position: String?,
