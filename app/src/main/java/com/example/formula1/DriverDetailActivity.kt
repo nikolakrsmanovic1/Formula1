@@ -101,7 +101,7 @@ class DriverDetailActivity : AppCompatActivity() {
         setStat(2, stats.podiums.toString())
         setStat(3, stats.dnf.toString())
         setStat(4, stats.fastestLaps.toString())
-        setStat(5, stats.titles.toString())
+        setStat(5, stats.titles?.toString() ?: getString(R.string.stat_value_placeholder))
         setStat(6, stats.races.toString())
     }
 

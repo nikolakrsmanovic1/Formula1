@@ -52,13 +52,13 @@ data class DriverStats(
     val podiums: Int,
     val dnf: Int,
     val fastestLaps: Int,
-    val titles: Int,
+    val titles: Int?,
     val races: Int
 )
 
 /** Statistika jednog tima kroz istoriju. */
 data class TeamStats(
-    val titles: Int,
+    val titles: Int?,
     val wins: Int,
     val poles: Int,
     val podiums: Int,

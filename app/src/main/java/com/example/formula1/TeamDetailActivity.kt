@@ -100,7 +100,8 @@ class TeamDetailActivity : AppCompatActivity() {
     private fun showStats(stats: TeamStats) {
         val values = listOf(stats.titles, stats.wins, stats.poles, stats.podiums, stats.fastestLaps)
         for ((id, value) in statIds.zip(values)) {
-            findViewById<View>(id).findViewById<TextView>(R.id.tvStatValue).text = value.toString()
+            findViewById<View>(id).findViewById<TextView>(R.id.tvStatValue).text =
+                value?.toString() ?: getString(R.string.stat_value_placeholder)
         }
     }
 

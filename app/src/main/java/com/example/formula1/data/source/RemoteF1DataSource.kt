@@ -124,25 +124,36 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
     }
 
     /**
-     * Titule: jedan poziv vraca sampiona svake sezone (f1/driverstandings/1.json), pa samo
-     * prebrojimo sezone u kojima je prvi bio nas vozac. Sezona koja jos traje se ne racuna.
+     * Titule: jedan poziv vraca poredak vozaca u svim sezonama (drivers/{id}/driverstandings.json),
+     * pa prebrojimo sezone u kojima je zavrsio prvi. Sezona koja jos traje se ne racuna.
+     * Ako API odbije ovaj upit, vracamo null (na ekranu "-"), a ostala statistika ostaje.
      */
-    private suspend fun driverTitles(driverId: String): Int {
+    private suspend fun driverTitles(driverId: String): Int? = optional {
         val unfinished = unfinishedSeason()
-        return limiter.withPermit {
+        limiter.withPermit {
             delay(PAUSE_MILLIS)
-            api.getDriverStandingsAt("driverstandings/1.json", LIMIT_ALL).mrData?.table?.lists.orEmpty()
+            api.getDriverStandingsAt("drivers/$driverId/driverstandings.json", LIMIT_ALL)
+                .mrData?.table?.lists.orEmpty()
         }.filter { it.season != unfinished }
-            .count { list -> list.standings.orEmpty().any { it.driver?.driverId == driverId } }
+            .count { list -> list.standings.orEmpty().any { it.position == "1" } }
     }
 
-    private suspend fun teamTitles(teamId: String): Int {
+    private suspend fun teamTitles(teamId: String): Int? = optional {
         val unfinished = unfinishedSeason()
-        return limiter.withPermit {
+        limiter.withPermit {
             delay(PAUSE_MILLIS)
-            api.getConstructorStandingsAt("constructorstandings/1.json", LIMIT_ALL).mrData?.table?.lists.orEmpty()
+            api.getConstructorStandingsAt("constructors/$teamId/constructorstandings.json", LIMIT_ALL)
+                .mrData?.table?.lists.orEmpty()
         }.filter { it.season != unfinished }
-            .count { list -> list.standings.orEmpty().any { it.constructor?.constructorId == teamId } }
+            .count { list -> list.standings.orEmpty().any { it.position == "1" } }
+    }
+
+    /** Za podatke koji nisu bitni toliko da ruse ceo ekran: HTTP greska znaci "nema podatka". */
+    private suspend fun <T> optional(block: suspend () -> T): T? = try {
+        block()
+    } catch (e: HttpException) {
+        Log.e(TAG, "HTTP ${e.code()} za ${e.response()?.raw()?.request?.url}", e)
+        null
     }
 
     /** Godina sezone koja jos traje (poslednja trka u kalendaru je u buducnosti), inace null. */
