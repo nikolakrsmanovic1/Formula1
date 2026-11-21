@@ -14,6 +14,7 @@ import com.example.formula1.model.RaceSession
 import com.example.formula1.model.SessionType
 import com.example.formula1.model.TeamStanding
 import com.example.formula1.model.TeamStats
+import android.util.Log
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -107,10 +108,13 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
     } catch (e: DataException) {
         throw e
     } catch (e: HttpException) {
+        Log.e(TAG, "HTTP ${e.code()} za ${e.response()?.raw()?.request?.url}", e)
         throw DataException(ErrorKind.SERVER, e)
     } catch (e: IOException) {
+        Log.e(TAG, "Mrezna greska", e)
         throw DataException(ErrorKind.NETWORK, e)
     } catch (e: Exception) {
+        Log.e(TAG, "Neocekivana greska", e)
         throw DataException(ErrorKind.UNKNOWN, e)
     }
 
@@ -221,6 +225,7 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
     private companion object {
         const val LIMIT_ALL = 100
         const val MAX_PARALLEL_CALLS = 1
+        const val TAG = "F1"
         const val PAUSE_MILLIS = 250L
     }
 }
