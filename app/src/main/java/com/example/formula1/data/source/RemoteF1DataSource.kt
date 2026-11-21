@@ -1,5 +1,7 @@
 package com.example.formula1.data.source
 
+import com.example.formula1.data.ChampionStore
+import com.example.formula1.data.NoChampionStore
 import com.example.formula1.data.api.ConstructorStandingDto
 import com.example.formula1.data.api.DriverStandingDto
 import com.example.formula1.data.api.JolpicaApi
@@ -16,6 +18,7 @@ import com.example.formula1.model.TeamStanding
 import com.example.formula1.model.TeamStats
 import android.util.Log
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Semaphore
@@ -29,7 +32,10 @@ import java.util.TimeZone
 import kotlin.coroutines.cancellation.CancellationException
 
 /** Podaci sa Jolpica API-ja: poziva Retrofit i pretvara odgovor u nase modele. */
-class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
+class RemoteF1DataSource(
+    private val api: JolpicaApi,
+    private val store: ChampionStore = NoChampionStore()
+) : F1DataSource {
 
     // Statistika trazi vise poziva; ogranicavamo koliko ih ide istovremeno (API ima limit po sekundi).
     private val limiter = Semaphore(MAX_PARALLEL_CALLS)
@@ -126,7 +132,7 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
      */
     override suspend fun driverTitles(driverId: String): Int = call {
         countTitles("drivers/$driverId/seasons.json", FIRST_DRIVER_SEASON) { season ->
-            driverChampions.getOrPut(season) {
+            champion("d$season", driverChampions, season) {
                 val first = limiter.withPermit {
                     delay(PAUSE_MILLIS)
                     api.getDriverStandingsAt("$season/driverstandings.json", 1)
@@ -138,7 +144,7 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
 
     override suspend fun teamTitles(teamId: String): Int = call {
         countTitles("constructors/$teamId/seasons.json", FIRST_TEAM_SEASON) { season ->
-            teamChampions.getOrPut(season) {
+            champion("t$season", teamChampions, season) {
                 val first = limiter.withPermit {
                     delay(PAUSE_MILLIS)
                     api.getConstructorStandingsAt("$season/constructorstandings.json", 1)
@@ -146,6 +152,19 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
                 first?.constructor?.constructorId.orEmpty()
             } == teamId
         }
+    }
+
+    /** Sampion sezone: iz memorije, pa iz trajnog pamcenja, a tek onda sa interneta. */
+    private suspend fun champion(
+        key: String,
+        memory: HashMap<String, String>,
+        season: String,
+        load: suspend () -> String
+    ): String {
+        memory[season]?.let { return it }
+        val value = store.get(key) ?: load().also { store.put(key, it) }
+        memory[season] = value
+        return value
     }
 
     private val driverChampions = HashMap<String, String>()
@@ -163,11 +182,10 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
         }.mrData?.table?.seasons.orEmpty()
             .mapNotNull { it.season }
             .filter { it != unfinished && (it.toIntOrNull() ?: 0) >= firstSeason }
-        var titles = 0
-        for (season in seasons) {
-            if (isChampion(season)) titles++
+        // Sezone se proveravaju istovremeno (limiter pazi na limit API-ja)
+        return coroutineScope {
+            seasons.map { season -> async { isChampion(season) } }.awaitAll().count { it }
         }
-        return titles
     }
 
     /** Godina sezone koja jos traje (poslednja trka u kalendaru je u buducnosti), inace null. */
@@ -269,10 +287,10 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
 
     private companion object {
         const val LIMIT_ALL = 100
-        const val MAX_PARALLEL_CALLS = 1
+        const val MAX_PARALLEL_CALLS = 3
         const val TAG = "F1"
         const val FIRST_DRIVER_SEASON = 1950
         const val FIRST_TEAM_SEASON = 1958
-        const val PAUSE_MILLIS = 250L
+        const val PAUSE_MILLIS = 400L
     }
 }
