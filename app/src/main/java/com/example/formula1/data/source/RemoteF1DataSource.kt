@@ -16,6 +16,7 @@ import com.example.formula1.model.TeamStanding
 import com.example.formula1.model.TeamStats
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import retrofit2.HttpException
@@ -114,20 +115,24 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
     }
 
     private suspend fun total(path: String): Int = limiter.withPermit {
+        delay(PAUSE_MILLIS)
         api.getTotal(path, 1).mrData?.total?.toIntOrNull() ?: 0
     }
 
     /** Broj sezona u kojima je vozac zavrsio na prvom mestu. */
     private suspend fun driverTitles(path: String): Int = limiter.withPermit {
+        delay(PAUSE_MILLIS)
         api.getDriverStandingsAt(path, LIMIT_ALL).mrData?.table?.lists.orEmpty().size
     }
 
     private suspend fun teamTitles(path: String): Int = limiter.withPermit {
+        delay(PAUSE_MILLIS)
         api.getConstructorStandingsAt(path, LIMIT_ALL).mrData?.table?.lists.orEmpty().size
     }
 
     /** DNF = trke koje nisu zavrsene regularno ("Finished" ili "+N Lap(s)"). */
     private suspend fun dnfCount(path: String): Int = limiter.withPermit {
+        delay(PAUSE_MILLIS)
         api.getStatuses(path, LIMIT_ALL).mrData?.table?.status.orEmpty()
             .filter { isRetirement(it.status.orEmpty()) }
             .sumOf { it.count?.toIntOrNull() ?: 0 }
@@ -215,6 +220,7 @@ class RemoteF1DataSource(private val api: JolpicaApi) : F1DataSource {
 
     private companion object {
         const val LIMIT_ALL = 100
-        const val MAX_PARALLEL_CALLS = 3
+        const val MAX_PARALLEL_CALLS = 1
+        const val PAUSE_MILLIS = 250L
     }
 }

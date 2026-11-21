@@ -30,25 +30,30 @@ object JolpicaClient {
 }
 
 /**
- * API ogranicava broj poziva u sekundi (HTTP 429). Ako se to desi, kratko sacekamo
- * i pokusamo ponovo, najvise dva puta.
+ * API ogranicava broj poziva (HTTP 429). Ako se to desi (ili server privremeno javi 5xx),
+ * sacekamo (koliko API trazi preko Retry-After, a najmanje malo duze sa svakim pokusajem)
+ * i pokusamo ponovo.
  */
 class RetryWhenTooManyRequests : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var response = chain.proceed(chain.request())
         var attempt = 0
-        while (response.code == TOO_MANY_REQUESTS && attempt < MAX_RETRIES) {
+        while (shouldRetry(response.code) && attempt < MAX_RETRIES) {
+            val asked = response.header("Retry-After")?.toLongOrNull()?.times(1000) ?: 0L
             response.close()
             attempt++
-            Thread.sleep(WAIT_MILLIS * attempt)
+            Thread.sleep(maxOf(asked, WAIT_MILLIS * attempt).coerceAtMost(MAX_WAIT_MILLIS))
             response = chain.proceed(chain.request())
         }
         return response
     }
 
+    private fun shouldRetry(code: Int) = code == TOO_MANY_REQUESTS || code in 500..599
+
     private companion object {
         const val TOO_MANY_REQUESTS = 429
-        const val MAX_RETRIES = 2
-        const val WAIT_MILLIS = 1000L
+        const val MAX_RETRIES = 4
+        const val WAIT_MILLIS = 1500L
+        const val MAX_WAIT_MILLIS = 8000L
     }
 }
